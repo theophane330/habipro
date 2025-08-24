@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import Proprietaire from "./proprietaire/proprietaire";
+
+function Navigation() {
+  const location = useLocation();
+  // Masquer la nav sur /proprietaire
+  if (location.pathname === "/proprietaire") return null;
+  return (
+    <nav>
+      <Link to="/proprietaire">Propriétaire</Link> |{" "}
+      <Link to="/pageOgbgte">Ogbgte</Link>
+    </nav>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navigation />
+      <Routes>
+        <Route path="/proprietaire" element={<Proprietaire />} />
+        {/* Ajoutez d'autres routes ici si besoin */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
