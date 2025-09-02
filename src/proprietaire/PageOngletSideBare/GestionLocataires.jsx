@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Download, Plus, Eye, Edit, Trash2, Phone, Mail, MessageSquare, FileText, Calendar, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { Search, Download, Eye, Edit, Trash2, Phone, Mail, MessageSquare, FileText, Calendar, AlertCircle, CheckCircle, Clock } from 'lucide-react';
 
 export default function Tenants({
     setIsTenantModalOpen,
