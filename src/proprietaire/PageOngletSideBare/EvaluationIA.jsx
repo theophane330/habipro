@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Scale, FileText, AlertTriangle, BookOpen, CheckCircle, Clock } from 'lucide-react';
+import JuridiquePanel from '../IAFonctionnalites/juridique';
 
 export default function EvaluationIA() {
   const [selectedFeature, setSelectedFeature] = useState(0);
@@ -100,19 +100,9 @@ export default function EvaluationIA() {
     }
   };
 
-  const juridicalDocuments = [
-    { name: 'Contrat de bail standard', status: 'Généré', type: 'CONTRACT', updated: '2 min' },
-    { name: 'État des lieux', status: 'En cours', type: 'INVENTORY', updated: '1h' },
-    { name: 'Congé pour vente', status: 'Modèle', type: 'NOTICE', updated: '3j' },
-    { name: 'Quittance de loyer', status: 'Généré', type: 'RECEIPT', updated: '5 min' },
-    { name: 'Augmentation de loyer', status: 'Prêt', type: 'INCREASE', updated: '1j' },
-  ];
-
-  const recentAlerts = [
-    { type: 'INFO', message: 'Nouvelle réglementation sur les diagnostics énergétiques', time: '2h' },
-    { type: 'WARNING', message: 'Échéance contrat assurance PNO dans 30 jours', time: '1j' },
-    { type: 'UPDATE', message: 'Mise à jour du plafonnement des loyers en zone tendue', time: '3j' },
-  ];
+  const handleCloseJuridiquePanel = () => {
+    setShowJuridicalPanel(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 relative overflow-hidden">
@@ -250,7 +240,7 @@ export default function EvaluationIA() {
                     ))}
                   </div>
 
-                  {/* Bouton premium avec gradient et effets */}
+         {/* Bouton premium avec gradient et effets */}
                   <div className="text-center pt-4">
                     <button 
                       onClick={handleActivateModule}
@@ -419,236 +409,11 @@ export default function EvaluationIA() {
         </div>
       </div>
 
-      {/* Panneau Assistant Juridique */}
-      <div className={`fixed inset-y-0 right-0 w-3/4 bg-white/95 backdrop-blur-2xl shadow-2xl border-l border-slate-200/50 z-50 transform transition-transform duration-700 ease-out ${showJuridicalPanel ? 'translate-x-0' : 'translate-x-full'}`}>
-        
-        {/* Header du panneau */}
-        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-violet-500/10"></div>
-          <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="text-3xl">⚖️</div>
-              <div>
-                <h2 className="text-2xl font-extralight tracking-wide">ASSISTANT JURIDIQUE</h2>
-                <p className="text-slate-300 text-sm tracking-[0.1em]">CONFORMITÉ AUTOMATISÉE</p>
-              </div>
-            </div>
-            <button 
-              onClick={() => setShowJuridicalPanel(false)}
-              className="p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors duration-300"
-            >
-              <X size={24} />
-            </button>
-          </div>
-          
-          {/* Status bar */}
-          <div className="mt-6 flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-              <span className="text-sm text-slate-300">Système actif</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-emerald-400" />
-              <span className="text-sm text-slate-300">Conformité à jour</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock size={16} className="text-blue-400" />
-              <span className="text-sm text-slate-300">Dernière mise à jour : 2 min</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Contenu du panneau */}
-        <div className="p-8 h-full overflow-y-auto">
-          
-          {/* Actions rapides */}
-          <div className="mb-8">
-            <h3 className="text-lg font-light text-slate-900 mb-4 tracking-wide">ACTIONS RAPIDES</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: <FileText size={20} />, title: 'Générer contrat', desc: 'Bail résidentiel', color: 'bg-blue-50 text-blue-600 border-blue-200' },
-                { icon: <Scale size={20} />, title: 'Vérifier conformité', desc: 'Réglementation actuelle', color: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
-                { icon: <BookOpen size={20} />, title: 'État des lieux', desc: 'Modèle automatisé', color: 'bg-amber-50 text-amber-600 border-amber-200' },
-                { icon: <AlertTriangle size={20} />, title: 'Procédure urgente', desc: 'Congé pour vente', color: 'bg-rose-50 text-rose-600 border-rose-200' }
-              ].map((action, index) => (
-                <button key={index} className={`p-4 rounded-xl border-2 ${action.color} hover:shadow-lg transition-all duration-300 text-left group`}>
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 group-hover:scale-110 transition-transform duration-300">
-                      {action.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-sm">{action.title}</h4>
-                      <p className="text-xs opacity-70 mt-1">{action.desc}</p>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Documents récents */}
-          <div className="mb-8">
-            <h3 className="text-lg font-light text-slate-900 mb-4 tracking-wide">DOCUMENTS RÉCENTS</h3>
-            <div className="space-y-3">
-              {juridicalDocuments.map((doc, index) => (
-                <div key={index} className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-slate-200/50 hover:shadow-lg transition-all duration-300 group">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        doc.status === 'Généré' ? 'bg-emerald-50 text-emerald-600' :
-                        doc.status === 'En cours' ? 'bg-amber-50 text-amber-600' :
-                        'bg-slate-50 text-slate-600'
-                      }`}>
-                        <FileText size={18} />
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-slate-900 text-sm">{doc.name}</h4>
-                        <p className="text-xs text-slate-500 mt-1">Modifié il y a {doc.updated}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        doc.status === 'Généré' ? 'bg-emerald-100 text-emerald-700' :
-                        doc.status === 'En cours' ? 'bg-amber-100 text-amber-700' :
-                        'bg-slate-100 text-slate-700'
-                      }`}>
-                        {doc.status}
-                      </span>
-                      <button className="p-2 rounded-lg hover:bg-slate-100 transition-colors duration-200 opacity-0 group-hover:opacity-100">
-                        <FileText size={16} className="text-slate-400" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Alertes réglementaires */}
-          <div className="mb-8">
-            <h3 className="text-lg font-light text-slate-900 mb-4 tracking-wide">ALERTES RÉGLEMENTAIRES</h3>
-            <div className="space-y-3">
-              {recentAlerts.map((alert, index) => (
-                <div key={index} className={`p-4 rounded-xl border-l-4 ${
-                  alert.type === 'INFO' ? 'bg-blue-50/50 border-blue-400' :
-                  alert.type === 'WARNING' ? 'bg-amber-50/50 border-amber-400' :
-                  'bg-slate-50/50 border-slate-400'
-                }`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start gap-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center mt-0.5 ${
-                        alert.type === 'INFO' ? 'bg-blue-100 text-blue-600' :
-                        alert.type === 'WARNING' ? 'bg-amber-100 text-amber-600' :
-                        'bg-slate-100 text-slate-600'
-                      }`}>
-                        {alert.type === 'INFO' && <BookOpen size={14} />}
-                        {alert.type === 'WARNING' && <AlertTriangle size={14} />}
-                        {alert.type === 'UPDATE' && <CheckCircle size={14} />}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-slate-700 leading-relaxed">{alert.message}</p>
-                      </div>
-                    </div>
-                    <span className="text-xs text-slate-400 whitespace-nowrap ml-4">il y a {alert.time}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section Veille législative */}
-          <div className="mb-8">
-            <h3 className="text-lg font-light text-slate-900 mb-4 tracking-wide">VEILLE LÉGISLATIVE</h3>
-            <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 text-white relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-violet-500/10"></div>
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <Scale size={24} className="text-blue-400" />
-                  <h4 className="font-medium">Intelligence Juridique IA</h4>
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed mb-4">
-                  Notre système surveille en continu les évolutions réglementaires et vous alerte automatiquement des changements impactant vos biens immobiliers.
-                </p>
-                <div className="grid grid-cols-3 gap-4">
-                  {[
-                    { label: 'Sources surveillées', value: '247' },
-                    { label: 'Mises à jour/jour', value: '18' },
-                    { label: 'Précision', value: '99.2%' }
-                  ].map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className="text-2xl font-extralight text-white">{stat.value}</div>
-                      <div className="text-xs text-slate-400 mt-1">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Templates disponibles */}
-          <div className="mb-8">
-            <h3 className="text-lg font-light text-slate-900 mb-4 tracking-wide">TEMPLATES DISPONIBLES</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { name: 'Bail meublé', category: 'CONTRATS', status: 'Mis à jour', icon: '🏠' },
-                { name: 'Congé locataire', category: 'COURRIERS', status: 'Standard', icon: '📝' },
-                { name: 'Procès-verbal', category: 'CONSTATS', status: 'Nouveau', icon: '📋' },
-                { name: 'Révision loyer', category: 'INDEXATION', status: 'Automatique', icon: '📊' },
-                { name: 'Caution solidaire', category: 'GARANTIES', status: 'Validé', icon: '🤝' },
-                { name: 'Diagnostic loi Carrez', category: 'DIAGNOSTICS', status: 'Obligatoire', icon: '📏' }
-              ].map((template, index) => (
-                <div key={index} className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-slate-200/50 hover:shadow-lg transition-all duration-300 group cursor-pointer">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="text-lg">{template.icon}</div>
-                    <div className="flex-1">
-                      <h4 className="font-medium text-sm text-slate-900">{template.name}</h4>
-                      <p className="text-xs text-slate-500">{template.category}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mt-3">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      template.status === 'Nouveau' ? 'bg-emerald-100 text-emerald-700' :
-                      template.status === 'Obligatoire' ? 'bg-rose-100 text-rose-700' :
-                      'bg-slate-100 text-slate-700'
-                    }`}>
-                      {template.status}
-                    </span>
-                    <button className="text-xs text-blue-600 hover:text-blue-800 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      Utiliser →
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Footer du panneau avec statistiques */}
-          <div className="bg-white/50 backdrop-blur-xl rounded-2xl p-6 border border-white/30">
-            <div className="grid grid-cols-4 gap-6 text-center">
-              {[
-                { label: 'Documents générés', value: '1,247', color: 'text-blue-600' },
-                { label: 'Conformité', value: '100%', color: 'text-emerald-600' },
-                { label: 'Temps économisé', value: '47h', color: 'text-amber-600' },
-                { label: 'Erreurs évitées', value: '23', color: 'text-rose-600' }
-              ].map((stat, index) => (
-                <div key={index}>
-                  <div className={`text-2xl font-extralight ${stat.color} mb-1`}>{stat.value}</div>
-                  <div className="text-xs text-slate-500">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Overlay pour fermer le panneau */}
-      {showJuridicalPanel && (
-        <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-700"
-          onClick={() => setShowJuridicalPanel(false)}
-        />
-      )}
+      {/* Intégration du composant JuridiquePanel */}
+      <JuridiquePanel 
+        showPanel={showJuridicalPanel} 
+        onClose={handleCloseJuridiquePanel} 
+      />
     </div>
-  );
+      );
 }
